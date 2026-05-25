@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playwright Log Analyzer</title>
+</head>
+
+<body>
+
+<h2>Playwright Log Analyzer</h2>
+
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Analyze</button>
+
+<pre id="result"></pre>
+
+<script>
+
+async function uploadFile() {
+
+    const file = document.getElementById("fileInput").files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("http://localhost:8080/analyze", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").innerText =
+        JSON.stringify(data, null, 2);
+}
+
+</script>
+
+</body>
+</html>
